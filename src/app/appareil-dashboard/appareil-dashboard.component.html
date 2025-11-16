@@ -1,0 +1,23 @@
+<h2>Gestion des Appareils</h2>
+
+<div class="my-4">
+  <button class="btn btn-success me-2" 
+          [disabled]="isAllButtonDisabled" 
+          (click)="onAllumerTout()">
+    Allumer Tout
+  </button>
+  <button class="btn btn-danger" (click)="onEteindreTout()">
+    Éteindre Tout
+  </button>
+</div>
+
+<ul class="list-unstyled">
+  <li *ngFor="let appareil of appareils; let i = index">
+    <app-appareil 
+      [appareilName]="appareil.name" 
+      [appareilStatus]="appareil.status"
+      [index]="i"
+      (switchEvent)="onSwitch(i)">
+    </app-appareil>
+  </li>
+</ul>

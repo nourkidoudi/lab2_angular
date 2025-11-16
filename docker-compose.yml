@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Service MongoDB
+  mongodb:
+    image: mongo:7.0
+    container_name: appareils-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: appareilsDB
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - appareils-network
+
+  # Service Application (Frontend + Backend)
+  app:
+    build: .
+    container_name: appareils-app
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:admin123@mongodb:27017/appareilsDB?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - appareils-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  appareils-network:
+    driver: bridge

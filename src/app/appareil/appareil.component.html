@@ -1,0 +1,14 @@
+<div class="card mb-3" [ngClass]="{'border-success': appareilStatus === 'Allumé', 'border-danger': appareilStatus === 'Eteint'}">
+  <div class="card-body">
+    <h5 class="card-title">
+      <input type="text" class="form-control" [(ngModel)]="appareilName" />
+    </h5>
+    <p class="card-text" [style.color]="getColor()">
+      {{ appareilName }} - {{ getStatus() }}
+    </p>
+    <button class="btn btn-sm btn-primary" (click)="onSwitch()">
+      {{ appareilStatus === 'Allumé' ? 'Éteindre' : 'Allumer' }}
+    </button>
+    <button class="btn btn-sm btn-info ms-2">Détail</button>
+  </div>
+</div>
